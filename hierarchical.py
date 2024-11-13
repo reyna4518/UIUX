@@ -9,8 +9,15 @@ def readFile(filename):
         header = next(reader)
         labels = header[1:]
 
-        for row in reader:
-            distMat.append([float(x) for x in row[1:]])
+        n = len(labels)
+        distMat = [[float('inf')] * n for _ in range(n)]
+
+        for i, row in enumerate(reader):
+            for j in range(i + 1):
+                value = row[j + 1]
+                dist = float(value) if value != '-' else float('inf')
+                distMat[i][j] = dist
+                distMat[j][i] = dist
 
     return labels, distMat
 
