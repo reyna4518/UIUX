@@ -50,17 +50,15 @@ def boxPlot(filePath):
     minVal, q1, median, q3, maxVal, iqr = calcFiveNum(values)
     outliers, lower, upper = findOutliers(values, q1, q3, iqr)
 
-    print(f"\nAnalysis of '{colName}':")
-    print(f"Min: {minVal}")
-    print(f"Q1: {q1}")
-    print(f"Median: {median}")
-    print(f"Q3: {q3}")
-    print(f"Max: {maxVal}")
+    print(f"\nBox Plot of '{colName}':")
+    print(f"Min: {minVal:.2f}")
+    print(f"Q1: {q1:.2f}")
+    print(f"Median: {median:.2f}")
+    print(f"Q3: {q3:.2f}")
+    print(f"Max: {maxVal:.2f}")
 
     print(f"IQR: {iqr:.2f}, Lower Bound: {lower:.2f}, Upper Bound: {upper:.2f}")
     print(f"Outliers: {outliers}")
 
-
-if __name__ == "__main__":
-    filePath = 'Folds5x2_pp.csv'
-    boxPlot(filePath)
+filePath = 'Folds5x2_pp.csv'
+boxPlot(filePath)
