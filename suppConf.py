@@ -35,8 +35,8 @@ def get_support(itemset, transactions):
     return count
 
 def calculate_confidence(A, B, transactions):
-    support_A = get_support([A], transactions)
-    support_AB = get_support([A, B], transactions)
+    support_A = get_support(A, transactions)
+    support_AB = get_support(A + B, transactions)
     
     if support_A == 0:
         return 0
@@ -55,20 +55,20 @@ def main():
     print()
     
     print("For Rule A--->B enter the items")
-    A_input = input("Enter item A: ")
-    A = A_input.strip()
+    A_input = input("Enter item A : ")
+    A = [item.strip() for item in A_input.split(',')]
     
-    B_input = input("Enter item B: ")
-    B = B_input.strip()
+    B_input = input("Enter item B : ")
+    B = [item.strip() for item in B_input.split(',')]
 
-    support_AB = get_support([A, B], transactions)
+    support_AB = get_support(A + B, transactions)
 
     confidence = calculate_confidence(A, B, transactions)
     
     support_percentage = (support_AB / total_transactions) * 100
     confidence_percentage = confidence * 100
 
-    print(f"\nRule: {A} ---> {B}")
+    print(f"\nRule: {', '.join(A)} ---> {', '.join(B)}")
     print(f"Support: {support_percentage:.2f}%")
     print(f"Confidence: {confidence_percentage:.2f}%")
 
