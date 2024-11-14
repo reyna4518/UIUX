@@ -24,35 +24,31 @@ def linearRegression(x, y):
 
 def correlation(x, y):
     n = len(x)
-    sumX = sum(x)
-    sumY = sum(y)
-    sumXX = sum(i ** 2 for i in x)
-    sumYY = sum(i ** 2 for i in y)
-    sumXY = sum(x[i] * y[i] for i in range(n))
-    
-    numerator = n * sumXY - sumX * sumY
-    denominator = ((n * sumXX - sumX ** 2) * (n * sumYY - sumY ** 2)) ** 0.5
-    corr = numerator/denominator
+    meanX = sum(x) / n
+    meanY = sum(y) / n
+    sumXY = sum((x[i] - meanX) * (y[i] - meanY) for i in range(n))
+    sumXX = sum((x[i] - meanX) ** 2 for i in range(n))
+    sumYY = sum((y[i] - meanY) ** 2 for i in range(n))
+    corr = sumXY / ((sumXX * sumYY) ** 0.5)
     return corr
 
 def getColumnsToProcess(headers):
     for i, header in enumerate(headers):
         print(f"{i+1}: {header}")
     
-    x_index = int(input("X Column: ").strip())-1
-    y_index = int(input("Y Column: ").strip())-1
+    x_index = int(input("X Column: ").strip()) - 1
+    y_index = int(input("Y Column: ").strip()) - 1
     
     return x_index, y_index
 
 def main():
     filePath = "Folds5x2_pp.csv"
     headers, data = readFile(filePath)
-    
     x_index, y_index = getColumnsToProcess(headers)
     x = extractColumn(data, x_index)
     y = extractColumn(data, y_index)
     
-    slope, intercept = linearRegression(x, y)
+    intercept, slope = linearRegression(x, y)
     print(f"Slope: {slope:.2f}")
     print(f"Intercept: {intercept:.2f}")
     print(f"Y = {slope:.2f} X + {intercept:.2f}")
